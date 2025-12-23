@@ -231,7 +231,8 @@ def get_gemini_analysis(api_key, product, archetype, phase, base_data):
     """呼叫 Gemini API 進行深度分析，要求 5 種受眾"""
     try:
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-pro')
+        # 更新為使用者指定的 gemini-2.5-flash 模型
+        model = genai.GenerativeModel('gemini-2.5-flash')
         
         prompt = f"""
         你是一位頂級房地產行銷顧問，具備市場「深度搜尋 (Deep Search)」的分析能力。
