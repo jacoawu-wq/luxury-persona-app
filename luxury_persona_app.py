@@ -179,14 +179,20 @@ st.sidebar.divider()
 with st.sidebar.expander("🔐 AI 設定 (Gemini API)", expanded=True):
     # 無論是否有安裝套件，都顯示輸入框 (修正輸入欄位消失問題)
     api_key = st.text_input("輸入 Gemini API Key", type="password", help="貼上您的 Google Gemini API Key 以啟用 AI 深度分析功能")
+    
+    # 新增確認按鈕
+    confirm_key = st.button("確認/儲存 API Key")
 
     if not HAS_GENAI:
         # 修改錯誤訊息，引導使用者去雲端後台 Reboot
         st.error("⚠️ 系統偵測到未安裝 `google-generativeai`。")
         st.info("如果您已上傳 `requirements.txt` 到 GitHub，請嘗試在 Streamlit Cloud 後台點擊 **'Reboot App'** 以重新安裝套件。")
         st.warning("目前僅能使用【規則模式】。")
-    elif api_key:
+    elif confirm_key and api_key:
         st.success("🟢 API Key 驗證過關，可以使用！")
+    elif api_key:
+        # 如果有輸入但沒按按鈕，也預設視為有效，但提示可以按按鈕確認
+        pass 
     else:
         st.warning("未輸入 Key，將使用內建模板模式")
 
