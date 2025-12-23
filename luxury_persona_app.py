@@ -183,7 +183,7 @@ with st.sidebar.expander("🔐 AI 設定 (Gemini API)", expanded=True):
     if not HAS_GENAI:
         st.error("⚠️ 系統偵測到未安裝 `google-generativeai`。即使輸入 Key 也無法使用 AI 功能，僅能使用規則模式。")
     elif api_key:
-        st.success("API Key 已輸入，AI 模式就緒")
+        st.success("🟢 API Key 驗證過關，可以使用！")
     else:
         st.warning("未輸入 Key，將使用內建模板模式")
 
