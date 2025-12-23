@@ -181,7 +181,10 @@ with st.sidebar.expander("🔐 AI 設定 (Gemini API)", expanded=True):
     api_key = st.text_input("輸入 Gemini API Key", type="password", help="貼上您的 Google Gemini API Key 以啟用 AI 深度分析功能")
 
     if not HAS_GENAI:
-        st.error("⚠️ 系統偵測到未安裝 `google-generativeai`。即使輸入 Key 也無法使用 AI 功能，僅能使用規則模式。")
+        # 修改錯誤訊息，引導使用者去雲端後台 Reboot
+        st.error("⚠️ 系統偵測到未安裝 `google-generativeai`。")
+        st.info("如果您已上傳 `requirements.txt` 到 GitHub，請嘗試在 Streamlit Cloud 後台點擊 **'Reboot App'** 以重新安裝套件。")
+        st.warning("目前僅能使用【規則模式】。")
     elif api_key:
         st.success("🟢 API Key 驗證過關，可以使用！")
     else:
@@ -305,7 +308,11 @@ if generate_btn:
         # ---------------------------------------
         # 規則模式顯示區 (Fallback)
         # ---------------------------------------
-        st.warning("⚠️ 未偵測到 API Key，切換回「標準規則模式」。(輸入 Key 可解鎖 5 種 AI 受眾分析)")
+        if not HAS_GENAI:
+             st.error("❌ 無法啟用 AI 模式：偵測到環境缺少 `google-generativeai` 套件。")
+             st.info("請在 Streamlit Cloud 後台點擊 **'Reboot App'** 以重新讀取 requirements.txt。")
+        elif not api_key:
+             st.warning("⚠️ 未偵測到 API Key，切換回「標準規則模式」。(輸入 Key 可解鎖 5 種 AI 受眾分析)")
         
         # 區塊一：人物誌側寫
         st.subheader("1️⃣ 人物誌側寫 (Persona Profile)")
